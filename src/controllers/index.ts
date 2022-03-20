@@ -5,8 +5,8 @@ import NurseController from './nurse';
 import BookingController from './booking';
 const router: express.Router = express.Router();
 
-router.use("/vaccination-center", VaccinationController);
+router.use("/vaccination-centers", VaccinationController);
 router.use("/nurse", NurseController);
-router.use("/booking", BookingController);
+router.use("/bookings", BookingController);
 
 export default router;
