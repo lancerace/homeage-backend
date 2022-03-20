@@ -23,7 +23,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
         //2. add booking
         const booking: Booking = await BookingService.addBooking(user.userId, vaccinationcenterId, slot);
 
-        return res.json({ booking, success: true });
+        return res.json({ booking, success: true, message: "added booking successfully" });
     } catch (err) {
         res.status(500).send({ success: false, message: await DBErrorHandling(err), booking: null })
     }
