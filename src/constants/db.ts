@@ -1,0 +1,1 @@
+export const UPDATED_SUCCESS_MESSAGE = 'records updated successfully';

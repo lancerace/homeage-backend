@@ -1,15 +1,20 @@
 import express from 'express';
+import VaccinationCenter from '../entities/vaccinationCenter';
+import { VaccinationCenterService } from '../services';
+import { DBErrorHandling } from '../utils/db';
 const router: express.Router = express.Router();
 
-router.get('/vaccination-center', async (req: express.Request, res: express.Response) => {
+router.get('/', async (req: express.Request, res: express.Response) => {
+    try {
+        const vaccinationCenters: VaccinationCenter[] = await VaccinationCenterService.getVaccinationCenters();
+        if (!vaccinationCenters)
+            return res.status(500).send({ vaccinationCenters: null, success: false })
 
-    return res.json({ success: false, account_exist: false });
-})
-
-
-router.get('/vaccination-center/:id', async (req: express.Request, res: express.Response) => {
-
-    return res.json({ success: false, account_exist: false });
+        return res.json({ vaccinationCenters, success: true });
+        
+    } catch (err) {
+        res.status(500).send({ success: false, message: await DBErrorHandling(err) })
+    }
 })
 
 export default router;

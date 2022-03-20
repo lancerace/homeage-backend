@@ -4,9 +4,9 @@ import { json, urlencoded } from "body-parser";
 import cors from 'cors';
 import express from 'express';
 import bodyParser from "body-parser";
-import { VaccinationController } from "./controllers";
+import logger from './utils/logger';
+import MainController from "./controllers";
 import { createConnection } from 'typeorm';
-
 
 const app = express();
 app.use(json());
@@ -14,16 +14,12 @@ app.use(urlencoded({ extended: true }));
 app.use(cors());
 
 app.listen(process.env.PORT || 3000, async () => {
-    console.log(`Server started, listening to port ${process.env.PORT}, env ${process.env.node_env} `);
+    logger.info(`Server started at PORT ${process.env.PORT} in ${process.env.NODE_ENV}`);
 
-    /*createConnection().then(async connection => {
-        console.log(`connection synched`);
-    }).catch(error => console.log(error));*/
+
+    createConnection().then(async connection => {
+        logger.info(`connection synched`);
+    }).catch(error => logger.error(`[connection error]: ${error}`));
 });
 
-app.use("/api/", VaccinationController);
-
-app.get("/healthcheck", async (req,res)=>{
-
-    return res.json("working");
-})
+app.use("/api", MainController);
