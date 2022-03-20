@@ -54,7 +54,7 @@ router.delete('/:bookingId', async (req: express.Request, res: express.Response)
     try {
         const result: boolean = await BookingService.deleteBooking(req.params.bookingId);
 
-        return res.json({ success: result });
+        return res.json({ success: result, message: "booking deleted successfully" });
     } catch (err) {
         res.status(500).send({ success: false, message: await DBErrorHandling(err) })
     }
