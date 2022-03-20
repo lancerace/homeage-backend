@@ -53,7 +53,7 @@ async function getBookings():Promise<Booking[]>{
 
 async function getBooking(bookingId: number): Promise<Booking> {
     const query = getRepository(Booking).createQueryBuilder('booking')
-        .select(["booking.bookingId",'booking.startTime','user.userId','user.fullName','booking.vaccinationcenterId'])
+        .select(["booking.bookingId",'booking.startTime','user.userId','user.fullName','user.nric','booking.vaccinationcenterId'])
         .leftJoin('booking.user','user')
         .where('booking.bookingId = :bookingId', { bookingId })
 
