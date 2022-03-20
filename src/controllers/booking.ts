@@ -40,6 +40,16 @@ router.get('/', async (req: express.Request, res: express.Response) => {
     }
 })
 
+router.get('/:bookingId', async (req: express.Request, res: express.Response) => {
+    try {
+        const booking: Booking = await BookingService.getBooking(req.params.bookingId);
+
+        return res.json({ booking, success: true });
+    } catch (err) {
+        res.status(500).send({ success: false, message: await DBErrorHandling(err), booking: null })
+    }
+})
+
 router.delete('/:bookingId', async (req: express.Request, res: express.Response) => {
     try {
         const result: boolean = await BookingService.deleteBooking(req.params.bookingId);

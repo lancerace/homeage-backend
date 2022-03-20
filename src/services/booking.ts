@@ -24,7 +24,7 @@ async function updateBooking(bookingId: number, userId: number, fullName: string
     let updateUser: UpdateResult, updateBooking: UpdateResult;
 
     //0. guard condition check booking exists
-    const booking: Booking = await BookingService.getBooking(bookingId, userId);
+    const booking: Booking = await BookingService.getBooking(bookingId);
     if (!booking)
         return { message: "booking Id does not exist", success: false };
 
@@ -51,13 +51,11 @@ async function getBookings():Promise<Booking[]>{
 }
 
 
-async function getBooking(bookingId: number, userId?: number): Promise<Booking> {
+async function getBooking(bookingId: number): Promise<Booking> {
     const query = getRepository(Booking).createQueryBuilder('booking')
-        .select(["booking.bookingId"])
+        .select(["booking.bookingId",'booking.startTime','user.userId','user.fullName','booking.vaccinationcenterId'])
+        .leftJoin('booking.user','user')
         .where('booking.bookingId = :bookingId', { bookingId })
-
-    if (userId)
-        query.andWhere('booking.userId = :userId', { userId })
 
     return await query.getOne();
 }
