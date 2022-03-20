@@ -62,9 +62,9 @@ router.delete('/:bookingId', async (req: express.Request, res: express.Response)
 
 router.put('/:bookingId', async (req: express.Request, res: express.Response) => {
     try {
-        const { bookingId, userId, nric, fullName, vaccinationcenterId, slot } = req.body;
+        const { userId, nric, fullName, vaccinationcenterId, slot } = req.body;
 
-        const result: IUpdateBooking = await BookingService.updateBooking(bookingId, userId, fullName, nric, vaccinationcenterId, slot);
+        const result: IUpdateBooking = await BookingService.updateBooking(req.params.bookingId, userId, fullName, nric, vaccinationcenterId, slot);
         return res.json({ message: result.message, success: result.success });
     } catch (err) {
         res.status(500).send({ success: false, message: await DBErrorHandling(err) })
