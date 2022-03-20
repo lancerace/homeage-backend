@@ -17,6 +17,6 @@ GET `/api/vaccination-centers` - Get all vaccination centers
 
 
 ## How to run the project
-1. `npm install -g typescript`
+1. `npm install --global yarn`
 2. `yarn install`
 3. `yarn dev`
